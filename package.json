@@ -16,7 +16,9 @@
     "unit-coverage": "3.4.x"
   },
   "files": [
-    "lib"
+    "lib",
+    "scripts",
+    "src"
   ],
   "main": "lib/core.js",
   "maintainers": [
