@@ -21,6 +21,8 @@ class Comb {
     this.pluginsDependencies = {};
     // List of supported syntaxes.
     this.supportedSyntaxes = new Set();
+    // Syntax override
+    this.syntaxOverride = false;
     // Whether verbose mode is on.
     this.verbose = false;
   }
@@ -32,6 +34,7 @@ class Comb {
 
     this.lint = config.lint;
     this.verbose = config.verbose;
+    this.syntaxOverride = config.syntax;
     if (config.exclude)
       this.exclude = config.exclude.map(function(pattern) {
         return new minimatch.Minimatch(pattern);
@@ -132,7 +135,7 @@ class Comb {
     if (!this._shouldProcessFile(path)) return;
 
     return vfs.read(path, 'utf8').then(function(data) {
-      let syntax = path.split('.').pop();
+      let syntax = that.syntaxOverride || path.split('.').pop();
       let processedData = that.processString(data, {
         syntax: syntax,
         filename: path
